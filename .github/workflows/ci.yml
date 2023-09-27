@@ -21,6 +21,9 @@ jobs:
       - name: Build Docker image
         run: docker build -t we45/vul_flask .
 
+      - name: Create container from image
+        run: docker create --name my-app we45/vul_flask:latest
+
   sca:
     needs: build
     runs-on: ubuntu-latest
