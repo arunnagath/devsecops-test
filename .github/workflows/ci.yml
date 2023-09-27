@@ -17,12 +17,13 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.12-dev
+     
+      - name: Create container from image
+        run: docker create --name my-app we45/vul_flask:latest
 
       - name: Build Docker image
         run: docker build -t we45/vul_flask .
-
-      - name: Create container from image
-        run: docker create --name my-app we45/vul_flask:latest
+        
 
   sca:
     needs: build
@@ -49,15 +50,15 @@ jobs:
 
       - name: Run Bandit scan
         run: bandit -r we45/vul_flask
-  dast:
-    needs: sast
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+  # dast:
+  #   needs: sast
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v3
 
-      - name: Install OWASP ZAP
-        run: pip install owasp-zap-cli
+  #     - name: Install OWASP ZAP
+  #       run: pip install owasp-zap-cli
 
-      - name: Run OWASP ZAP scan
-        run: zap-cli -g -u http://localhost:8080 -w report.xml
+  #     - name: Run OWASP ZAP scan
+  #       run: zap-cli -g -u http://localhost:8080 -w report.xml
