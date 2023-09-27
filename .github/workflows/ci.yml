@@ -10,13 +10,16 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Pull Dockerfile from Docker Hub
+        run: docker pull we45/vul_flask && docker cp we45/vul_flask:/Dockerfile ./
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v3
         with:
           python-version: 3.12-dev
 
       - name: Build Docker image
-        run: docker build -t we45/vul_flask --pull .
+        run: docker build -t we45/vul_flask .
 
   sca:
     needs: build
@@ -32,7 +35,7 @@ jobs:
         run: pyraider scan we45/vul_flask
 
   sast:
-    needs: build
+    needs: sca
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -43,9 +46,8 @@ jobs:
 
       - name: Run Bandit scan
         run: bandit -r we45/vul_flask
-
   dast:
-    needs: build
+    needs: sast
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
