@@ -38,18 +38,19 @@ jobs:
       - name: Run PyRaider scan
         run: pyraider scan my-app
 
-  # sast:
-  #   needs: sca
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@v3
+  sast:
+    needs: sca
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
 
-  #     - name: Install Bandit
-  #       run: pip install bandit
+      - name: Install Bandit
+        run: pip install bandit
 
-  #     - name: Run Bandit scan
-  #       run: bandit -r my-app
+      - name: Run Bandit scan
+        run: bandit -r my-app
+        
   # dast:
   #   needs: sast
   #   runs-on: ubuntu-latest
