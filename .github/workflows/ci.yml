@@ -16,7 +16,7 @@ jobs:
           python-version: 3.12-dev
 
       - name: Build Docker image
-        run: docker build -t we45/vul_flask .
+        run: docker build -t we45/vul_flask --pull .
 
   sca:
     needs: build
