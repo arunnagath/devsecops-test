@@ -36,7 +36,7 @@ jobs:
         run: pip install pyraider
 
       - name: Run PyRaider scan
-        run: pyraider scan my-app
+        run: pyraider scan we45/vul_flask
 
   sast:
     needs: sca
