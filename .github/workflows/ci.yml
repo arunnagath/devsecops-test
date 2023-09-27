@@ -39,7 +39,7 @@ jobs:
         run: pyraider scan my-app
 
       - name: Generate HTML report
-        run: pyraider go -e html
+        run: cd app/usr/local/bin/pyraider go -e html
 
   sast:
     needs: build
