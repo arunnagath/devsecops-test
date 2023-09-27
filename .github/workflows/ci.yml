@@ -64,7 +64,7 @@ jobs:
             languages: python
         
   dast:
-    needs: build
+    needs: sast
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
