@@ -22,7 +22,7 @@ jobs:
         run: docker create --name my-app we45/vul_flask:latest
 
       - name: Build Docker image
-        run: docker build -t we45/vul_flask .
+        run: docker build -t we45/vul_flaspk .
         
 
   sca:
@@ -37,6 +37,9 @@ jobs:
 
       - name: Run PyRaider scan
         run: pyraider scan we45/vul_flask
+
+      - name: Generate HTML report
+        run: pyraider report html
 
   sast:
     needs: build
