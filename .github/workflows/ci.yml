@@ -63,15 +63,15 @@ jobs:
         with:
             languages: python
         
-  # dast:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@v3
+  dast:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
 
-  #     - name: Install OWASP ZAP
-  #       run: pip install owasp-zap-cli
+      - name: Install OWASP ZAP
+        run: pip install owasp-zap-cli
 
-  #     - name: Run OWASP ZAP scan
-  #       run: zap-cli -g -u http://localhost:8080 -w report.xml
+      - name: Run OWASP ZAP scan
+        run: zap-cli -g -u http://localhost:8080 -w report.xml
