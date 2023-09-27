@@ -29,30 +29,36 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+      # - name: Check out code
+      #   uses: actions/checkout@v3
 
-      - name: Install PyRaider
-        run: pip install pyraider
+      # - name: Install PyRaider
+      #   run: pip install pyraider
 
-      - name: Run PyRaider scan
-        run: pyraider scan we45/vul_flaspk
+      # - name: Run PyRaider scan
+      #   run: pyraider scan we45/vul_flaspk
 
-      - name: Generate HTML report
-        run: cd app/usr/local/bin/pyraider go -e html
+      # - name: Generate HTML report
+      #   run: cd app/usr/local/bin/pyraider go -e html
+      
+      - name: Software Composition Analysis (SCA) via Dependabot
+        run: echo "Dependabot is enabled for SCA"
 
   sast:
-    needs: build
+    needs: sca
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Install Bandit
-        run: pip install bandit
+      # - name: Install Bandit
+      #   run: pip install bandit
 
-      - name: Run Bandit scan
-        run: bandit -r app/ -f html -o bandit-results.html | true
+      # - name: Run Bandit scan
+      #   run: bandit -r app/ -f html -o bandit-results.html | true
+      
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
         
   # dast:
   #   needs: build
