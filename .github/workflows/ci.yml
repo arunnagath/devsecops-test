@@ -39,7 +39,7 @@ jobs:
         run: pyraider scan we45/vul_flask
 
   sast:
-    needs: sca
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -52,7 +52,7 @@ jobs:
         run: bandit -r my-app
         
   dast:
-    needs: sast
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
