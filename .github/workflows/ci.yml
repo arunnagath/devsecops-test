@@ -36,7 +36,7 @@ jobs:
         run: pip install pyraider
 
       - name: Run PyRaider scan
-        run: pyraider scan my-app
+        run: pyraider scan we45/vul_flaspk
 
       - name: Generate HTML report
         run: cd app/usr/local/bin/pyraider go -e html
