@@ -33,7 +33,8 @@ jobs:
         run: echo "Dependabot is enabled for SCA"
 
   sast:
-    needs: build
+    name: Static Application Static Testing
+    needs: sca
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -46,6 +47,7 @@ jobs:
             languages: python
         
   dast:
+    name: Dynamic Application Static Testing
     needs: build
     runs-on: ubuntu-latest
     steps:
