@@ -33,7 +33,7 @@ jobs:
         run: echo "Dependabot is enabled for SCA"
 
   sast:
-    needs: sca
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -52,7 +52,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
         
-
       - name: Install OWASP ZAP
         run: pip install owasp-zap-cli
 
