@@ -58,7 +58,7 @@ jobs:
         
   dast:
     name: Dynamic Application Static Testing
-    # needs: sast
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
