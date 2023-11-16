@@ -5,6 +5,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -26,6 +27,7 @@ jobs:
         
 
   sca:
+    name: SCA
     needs: build
     runs-on: ubuntu-latest
     steps:
