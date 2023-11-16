@@ -26,27 +26,27 @@ jobs:
         run: docker build -t we45/vul_flaspk .
         
 
-  sca:
-    name: SCA
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Software Composition Analysis (SCA) via Dependabot
-        run: echo "Dependabot is enabled for SCA"
+  # sca:
+  #   name: SCA
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Software Composition Analysis (SCA) via Dependabot
+  #       run: echo "Dependabot is enabled for SCA"
 
-  sast:
-    name: Static Application Static Testing
-    needs: sca
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+  # sast:
+  #   name: Static Application Static Testing
+  #   needs: sca
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v3
       
-      - name: Initialize CodeQL
-        # uses: github/codeql-action/init@v2
-        uses: github/codeql-action/v2@v2.21.9
-        with:
-            languages: python
+  #     - name: Initialize CodeQL
+  #       # uses: github/codeql-action/init@v2
+  #       uses: github/codeql-action/v2@v2.21.9
+  #       with:
+  #           languages: python
         
 #   dast:
 #     name: Dynamic Application Static Testing
