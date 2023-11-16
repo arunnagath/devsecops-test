@@ -27,7 +27,7 @@ jobs:
         
 
   sca:
-    name: SCA
+    name: Software Composition Analysis (SCA) via Dependabot
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +50,7 @@ jobs:
         
   dast:
     name: Dynamic Application Static Testing
-    needs: build
+    needs: sast
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
