@@ -1,3 +1,84 @@
+# name: DevSecOps Pipeline
+
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v3
+
+#       - name: Pull Dockerfile from Docker Hub
+#         run: docker pull we45/vul_flask:latest
+
+#       - name: Set up Python 3.12
+#         uses: actions/setup-python@v3
+#         with:
+#           python-version: 3.12-dev
+     
+#       - name: Create container from image
+#         run: docker create --name my-app we45/vul_flask:latest
+
+#       - name: Build Docker image
+#         run: docker build -t we45/vul_flaspk .
+        
+
+#   sca:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       # - name: Check out code
+#       #   uses: actions/checkout@v3
+
+#       # - name: Install PyRaider
+#       #   run: pip install pyraider
+
+#       # - name: Run PyRaider scan
+#       #   run: pyraider scan we45/vul_flaspk
+
+#       # - name: Generate HTML report
+#       #   run: cd app/usr/local/bin/pyraider go -e html
+      
+#       - name: Software Composition Analysis (SCA) via Dependabot
+#         run: echo "Dependabot is enabled for SCA"
+
+#   sast:
+#     needs: sca
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v3
+
+#       # - name: Install Bandit
+#       #   run: pip install bandit
+
+#       # - name: Run Bandit scan
+#       #   run: bandit -r app/ -f html -o bandit-results.html | true
+      
+#       - name: Initialize CodeQL
+#         # uses: github/codeql-action/init@v2
+#         uses: github/codeql-action/v2@v2.21.9
+#         with:
+#             languages: python
+        
+#   dast:
+#     needs: sast
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v3
+        
+
+#       - name: Install OWASP ZAP
+#         run: pip install owasp-zap-cli
+
+#       - name: Run OWASP ZAP scan
+#         run: zap-cli -g -u http://localhost:8080 -w report.xml
+
+
+
 name: DevSecOps Pipeline
 
 on:
@@ -6,6 +87,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    needs:
+      - sca
+      - sast
+      - dast
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -17,35 +102,34 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.12-dev
-     
+
       - name: Create container from image
         run: docker create --name my-app we45/vul_flask:latest
 
       - name: Build Docker image
-        run: docker build -t we45/vul_flaspk .
-        
+        run: docker build -t we45/vul_flask .
 
   sca:
-    needs: build
+    needs:
+      - build
     runs-on: ubuntu-latest
     steps:
-      # - name: Check out code
-      #   uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
       # - name: Install PyRaider
       #   run: pip install pyraider
 
       # - name: Run PyRaider scan
-      #   run: pyraider scan we45/vul_flaspk
+      #   run: pyraider scan we45/vul_flask
 
       # - name: Generate HTML report
-      #   run: cd app/usr/local/bin/pyraider go -e html
-      
-      - name: Software Composition Analysis (SCA) via Dependabot
-        run: echo "Dependabot is enabled for SCA"
+      #   run: pyraider report html
 
   sast:
-    needs: build
+    needs:
+      - build
+      - sca
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -56,20 +140,16 @@ jobs:
 
       # - name: Run Bandit scan
       #   run: bandit -r app/ -f html -o bandit-results.html | true
-      
-      - name: Initialize CodeQL
-        # uses: github/codeql-action/init@v2
-        uses: github/codeql-action/v2@v2.21.9
-        with:
-            languages: python
-        
+
   dast:
-    needs: sca
+    needs:
+      - build
+      - sca
+      - sast
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-        
 
       - name: Install OWASP ZAP
         run: pip install owasp-zap-cli
