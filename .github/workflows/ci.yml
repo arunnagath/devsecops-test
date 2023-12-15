@@ -90,7 +90,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t arunnagath/helloworld:latest .
+          docker build -t arunnagath/hello_world:latest .
 
       - name: Login to GitHub Container Registry
         run: |
