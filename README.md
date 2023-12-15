@@ -28,4 +28,44 @@ Approach - 2
    
 
 Pipeline approach for sample python program
-1. Dev pushes the code -> 1.1 secret scan -> 1.2 SAST (GHAS) -> 1.3 Build -> 1.4 docker push -> 1.5 github registry for / any cloud artifact
+1. Dev pushes the code -> 1.1 secret scan -> 1.2 SAST (GHAS) -> 1.3 Build -> 1.4 docker push -> 1.5 github registry
+
+
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Write Python Hello World program
+        run: |
+          echo "print('Hello, World!')" > hello_world.py
+
+      - name: Build Docker image
+        run: |
+          docker build -t <your_username>/<image_name>:<tag> .
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io
+
+      - name: Push Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/<your_username>/<image_name>:<tag>
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
