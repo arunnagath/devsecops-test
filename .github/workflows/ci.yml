@@ -96,11 +96,10 @@ jobs:
         run: |
           docker login ghcr.io --username arunnagath --password-stdin <<< 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
         
- 
 
       - name: Push Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/arunnagath/HelloWorld:latest
+          docker push ghcr.io/arunnagath/helloworld:latest
 
 env:
   TESTTOKEN: ${{ secrets.TESTTOKEN }}
