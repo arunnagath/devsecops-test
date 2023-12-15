@@ -94,12 +94,12 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: |
-          echo "${{ secrets.GITHUBTOKEN }}" | docker login ghcr.io
+          echo "${{ secrets.TESTTOKEN }}" | docker login ghcr.io
 
       - name: Push Docker image to GitHub Container Registry
         run: |
           docker push ghcr.io/arunnagath/HelloWorld:latest
 
 env:
-  GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+  TESTTOKEN: ${{ secrets.TESTTOKEN }}
 
