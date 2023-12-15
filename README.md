@@ -25,7 +25,30 @@ Approach - 2
 3. SAST via GHAS for (codescanning, secrets and dependancy issue)
 4. DAST via owasp cli
 5. pushes the code to any cloud artifact
-   
+
+         - name: Authenticate to Google Cloud
+        uses: google/cloud/deploy-gcloud-auth-action@v2
+        with:
+          credentials: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${SERVICE_NAME} \
+            --image ghcr.io/<your_username>/<image_name>:<tag> \
+            --platform=REGION \
+            --region=${REGION}
+
+      - name: Verify deployment
+        run: |
+          gcloud run services describe ${SERVICE_NAME}
+
+      - name: Clean up (optional)
+        if: always()
+        run: |
+          gcloud run services delete ${SERVICE_NAME}
+
+
+   Main Approach 
 
 Pipeline approach for sample python program
 1. Dev pushes the code -> 1.1 secret scan -> 1.2 SAST (GHAS) -> 1.3 Build -> 1.4 docker push -> 1.5 github registry
