@@ -92,3 +92,17 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
+objectivec for lab
+
+1. Github repo python hello world program should be there
+2. whenever code changes happen our on push workflow shopuld trigger
+3. then start the SCA and SAST scan
+4. build docker image for the hello world python program
+5. then pushes to ghcr.io
+
+
+
+Error - 15/12/2023
+
+1. Not able to push the docker image to ghcr.io
+2. Need to add sast workflow to the ci.yml file
