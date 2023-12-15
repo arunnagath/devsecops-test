@@ -94,7 +94,9 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: |
-          echo "${{ secrets.TESTTOKEN }}" | docker login ghcr.io
+          docker login ghcr.io --password-stdin <<< $TESTTOKEN
+        
+ 
 
       - name: Push Docker image to GitHub Container Registry
         run: |
