@@ -94,7 +94,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: |
-          docker login ghcr.io --password-stdin <<< $TESTTOKEN
+          docker login ghcr.io --username YOUR_USERNAME --password-stdin <<< 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
         
  
 
