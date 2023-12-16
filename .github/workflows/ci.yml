@@ -78,11 +78,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Python dependencies
-        run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          # pip install -r requirements.txt
+      # - name: Install Python dependencies
+      #   run: |
+      #     python3 -m venv venv
+      #     source venv/bin/activate
+      #     # pip install -r requirements.txt
 
       - name: Write Python Hello World program
         run: |
@@ -94,7 +94,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: |
-          docker login ghcr.io --username arunnagath --password-stdin <<< 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
+          echo "${{ secrets.TESTTOKEN }}" | docker login ghcr.io
         
 
       - name: Push Docker image to GitHub Container Registry
