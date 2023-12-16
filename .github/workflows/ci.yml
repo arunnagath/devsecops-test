@@ -101,7 +101,8 @@ jobs:
      
       - name: Login to GitHub Container Registry
         run: |
-         docker login ghcr.io -u $ghcr_user -p $CR_PAT
+         docker login --username arunnagath --password-stdin
+         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
       
       - name: Push Docker image to GitHub Container Registry
         run: |
