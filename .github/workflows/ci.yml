@@ -95,7 +95,7 @@ jobs:
         run: |
              pwd
              ls -lart
-             docker build . --file Dockerfile
+             docker build . --file Dockerfile --tag my-devsecops
              docker images
              docker push .
 
