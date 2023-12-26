@@ -68,6 +68,10 @@ on:
   push:
     branches: [ main ]
 
+env:  
+ REGISTRY: ghcr.io 
+ IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -78,7 +82,7 @@ jobs:
       actions: read
       security-events: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # - name: Install Python dependencies
       #   run: |
@@ -91,19 +95,19 @@ jobs:
       #     echo "print('Hello, World!')" > hello_world.py
 
       - name: Log into docker registry 
-        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1         
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GIT_WORKFLOW_TOKEN }}
-          lfs: true
+          # lfs: true
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ghcr.io/my-devsecops
-     
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}     
+          
       - name: Build Docker image
         run: |
              pwd
