@@ -95,7 +95,7 @@ jobs:
         run: |
              pwd
              ls -lart
-             docker build . --file Dockerfile --tag $IMAGE_NAME --label "First_Image"
+             docker build . --file Dockerfile --tag $IMAGE_NAME
              docker images
              docker push $IMAGE_NAME
 
