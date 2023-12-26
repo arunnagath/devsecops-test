@@ -1,4 +1,4 @@
-# name: DevSecOps Pipeline
+name: DevSecOps Pipeline
 
 # on:
 #   push:
@@ -63,10 +63,6 @@
 
 #       - name: Run OWASP ZAP scan
 #         run: zap-cli -g -u http://localhost:8080 -w report.xml
-        
-
-
-name: Build and Push Docker Image
 
 on:
   push:
@@ -88,18 +84,21 @@ jobs:
       #   run: |
       #     echo "print('Hello, World!')" > hello_world.py
 
-      - name: Build Docker image
-        run: |
-          docker build . --file Dockerfile --tag $IMAGE_NAME --label "First_Image"
-          docker images
-          docker push $IMAGE_NAME
-
-      - name: Log into GHCR registry 
-        uses: ./
+      - name: Log into docker registry 
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GIT_WORKFLOW_TOKEN }}
+     
+      - name: Build Docker image
+        run: |
+             pwd
+             ls -lart
+             docker build . --file Dockerfile --tag $IMAGE_NAME --label "First_Image"
+             docker images
+             docker push $IMAGE_NAME
+
      
       # - name: Login to GitHub Container Registry
       #   run: |
