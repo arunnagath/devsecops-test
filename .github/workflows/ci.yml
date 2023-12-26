@@ -96,8 +96,10 @@ jobs:
              pwd
              ls -lart
              docker build . --file Dockerfile --tag my-devsecops
+             IMAGE_ID=ghcr.io/devsecops-test/my-devsecops
+             IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
              docker images
-             docker push my-devsecops:latest
+             docker push $IMAGE_ID:latest
 
      
       # - name: Login to GitHub Container Registry
