@@ -84,13 +84,12 @@ jobs:
       #     source venv/bin/activate
       #     # pip install -r requirements.txt
 
-      - name: Write Python Hello World program
-        run: |
-          echo "print('Hello, World!')" > hello_world.py
+      # - name: Write Python Hello World program
+      #   run: |
+      #     echo "print('Hello, World!')" > hello_world.py
 
       - name: Build Docker image
         run: |
-            app:
               build: .
               ports:
                - "8080:8080"
