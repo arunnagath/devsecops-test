@@ -97,7 +97,7 @@ jobs:
              ls -lart
              docker build . --file Dockerfile --tag my-devsecops
              docker images
-             docker push .
+             docker push my-devsecops:latest
 
      
       # - name: Login to GitHub Container Registry
