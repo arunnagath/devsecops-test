@@ -90,7 +90,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t arunnagath/hello_world:latest .
+            app:
+              build: .
+              ports:
+               - "8080:8080"
+              command: python3 app.py
 
       - name: Log into GHCR registry 
         uses: ./
