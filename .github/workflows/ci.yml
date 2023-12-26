@@ -93,17 +93,17 @@ jobs:
           docker build -t arunnagath/hello_world:latest .
 
       - name: Log into GHCR registry 
-        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        uses: ./
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GIT_WORKFLOW_TOKEN }}
      
-      - name: Login to GitHub Container Registry
-        run: |
-         docker login --username arunnagath --password-stdin
-         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
+      # - name: Login to GitHub Container Registry
+      #   run: |
+      #    docker login --username arunnagath --password-stdin
+
       
-      - name: Push Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/arunnagath/helloworld:latest
+      # - name: Push Docker image to GitHub Container Registry
+      #   run: |
+      #     docker push ghcr.io/arunnagath/helloworld:latest
