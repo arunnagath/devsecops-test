@@ -95,9 +95,9 @@ jobs:
         run: |
              pwd
              ls -lart
-             docker build . --file Dockerfile --tag $IMAGE_NAME
+             docker build . --file Dockerfile
              docker images
-             docker push $IMAGE_NAME
+             docker push .
 
      
       # - name: Login to GitHub Container Registry
