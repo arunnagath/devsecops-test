@@ -7,6 +7,20 @@ on:
 permissions: write-all
 
 jobs:
+  sca:
+    name: Software Composition Analysis (SCA) via Dependabot
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Software Composition Analysis (SCA) via Dependabot
+        run: echo "Dependabot is enabled for SCA"
+
+  CodeQL:
+    name: Static Application Security Testing (SAST)
+    needs: sca
+    uses: ./.github/workflows/python-codeql.yml
+    secrets: inherit 
+        
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -21,13 +35,7 @@ jobs:
     uses: ./.github/workflows/python-codeql.yml
     secrets: inherit 
 
-  sast:
-    name: Software Composition Analysis (SCA) via Dependabot
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Software Composition Analysis (SCA) via Dependabot
-        run: echo "Dependabot is enabled for SCA"
+
 
   docker:
     needs: build
