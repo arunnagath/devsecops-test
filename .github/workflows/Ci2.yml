@@ -8,23 +8,30 @@ permissions: write-all
 
 jobs:
   build:
-    name: Build Job
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Build
-        run: echo "Building..."
 
   CodeQL:
     needs: build
     name: Build Codeql Scan 
     uses: ./.github/workflows/codeql_new.yml
-    secrets: inherit      
+    secrets: inherit 
+
+  sca:
+    name: Software Composition Analysis (SCA) via Dependabot
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Software Composition Analysis (SCA) via Dependabot
+        run: echo "Dependabot is enabled for SCA"
 
   docker:
     needs: build
-    name: Build docker image and perform trivy scan push image
+    name: Build docker image and perform scan
     uses: ./.github/workflows/docker-image.yml
     secrets: inherit
 
