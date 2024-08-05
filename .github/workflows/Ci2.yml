@@ -17,14 +17,17 @@ jobs:
     needs: sca
     runs-on: ubuntu-latest
     steps:
-      - name: Run CodeQL analysis
-        uses: ./.github/workflows/python-codeql.yml
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
         with:
-          secrets: inherit
+          languages: python
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
 
   build:
     name: Build
-    needs: CodeQL
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
