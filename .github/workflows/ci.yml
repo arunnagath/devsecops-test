@@ -1,54 +1,54 @@
 name: DevSecOps Pipeline
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out code
-#         uses: actions/checkout@v3
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
 
-#       - name: Pull Dockerfile from Docker Hub
-#         run: docker pull we45/vul_flask:latest
+      - name: Pull Dockerfile from Docker Hub
+        run: docker pull we45/vul_flask:latest
 
-#       - name: Set up Python 3.12
-#         uses: actions/setup-python@v3
-#         with:
-#           python-version: 3.12-dev
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.12-dev
      
-#       - name: Create container from image
-#         run: docker create --name my-app we45/vul_flask:latest
+      - name: Create container from image
+        run: docker create --name my-app we45/vul_flask:latest
 
-#       - name: Build Docker image
-#         run: docker build -t we45/vul_flaspk .
+      - name: Build Docker image
+        run: docker build -t we45/vul_flaspk .
         
 
-#   sca:
-#     name: Software Composition Analysis (SCA) via Dependabot
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Software Composition Analysis (SCA) via Dependabot
-#         run: echo "Dependabot is enabled for SCA"
+  sca:
+    name: Software Composition Analysis (SCA) via Dependabot
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Software Composition Analysis (SCA) via Dependabot
+        run: echo "Dependabot is enabled for SCA"
 
-#   sast:
-#     name: Static Application Static Testing
-#     needs: sca
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out code
-#         uses: actions/checkout@v3
+  sast:
+    name: Static Application Static Testing
+    needs: sca
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
       
-#       - name: Initialize CodeQL
-#         uses: github/codeql-action/init@v2
-#         # uses: github/codeql-action/v2@v2.21.9
-#         with:
-#             languages: python
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        # uses: github/codeql-action/v2@v2.21.9
+        with:
+            languages: python
         
 #   dast:
 #     name: Dynamic Application Static Testing
