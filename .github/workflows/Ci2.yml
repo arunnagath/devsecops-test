@@ -9,7 +9,6 @@ permissions: write-all
 jobs:
   sca:
     name: Software Composition Analysis (SCA) via Dependabot
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Software Composition Analysis (SCA) via Dependabot
