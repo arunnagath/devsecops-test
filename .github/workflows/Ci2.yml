@@ -1,1 +1,32 @@
+name: Devsecops Pipeline
 
+on:
+  push:
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  build:
+    name: Build Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build
+        run: echo "Building..."
+
+  CodeQL:
+    needs: build
+    name: Build Codeql Scan 
+    uses: ./.github/workflows/codeql_new.yml
+    secrets: inherit      
+
+  docker:
+    needs: build
+    name: Build docker image and perform trivy scan push image
+    uses: ./.github/workflows/docker-image.yml
+    secrets: inherit
+
+
+  
