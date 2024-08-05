@@ -24,7 +24,7 @@ jobs:
         with:
           languages: python
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: ./.github/workflows/codeql.yml
 
   build:
     name: Build
