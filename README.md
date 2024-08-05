@@ -6,8 +6,6 @@ build devsecops pipeline for in github actions
 2. use workflow dispatch
 3. use this for docker image https://hub.docker.com/r/we45/vul_flask/
 4. SAST we are using GHAS - it should be enabled in security
-6. for DAST use owasp zap cli
-7. 
 
 Approach - 1
 
