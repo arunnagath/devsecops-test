@@ -14,18 +14,10 @@ jobs:
         uses: actions/checkout@v3
 
   CodeQL:
-    name: Static Application Security Testing (SAST)
-    needs: sca
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: python
-      - name: Perform CodeQL Analysis
-        uses: ./.github/workflows/python-codeql.yml
+    needs: build
+    name: Build Codeql Scan 
+    uses: ./.github/workflows/python-codeql.yml
+    secrets: inherit   
 
   build:
     name: Build
