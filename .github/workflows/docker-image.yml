@@ -22,7 +22,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.HACKER }}
+          password: ${{ secrets.DOCKER }}
 
       - name: Build Docker image
         id: build_image
