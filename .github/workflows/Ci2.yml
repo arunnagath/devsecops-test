@@ -10,7 +10,8 @@ jobs:
     name: Software Composition Analysis (SCA) via Dependabot
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Dependabot is enabled for SCA"
+      - name: Checkout code
+        uses: actions/checkout@v3
 
   CodeQL:
     name: Static Application Security Testing (SAST)
