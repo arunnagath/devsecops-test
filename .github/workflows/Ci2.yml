@@ -31,7 +31,7 @@ jobs:
 
   docker:
     needs: build
-    name: Build docker image and perform scan
+    name: Build docker image
     runs-on: ubuntu-latest
     steps:
       - name: Build Docker image
