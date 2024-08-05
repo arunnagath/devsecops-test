@@ -1,4 +1,4 @@
-name: "Devsecops Pipe Line"
+name: "Python-codeql"
 
 on:
   workflow_call:
