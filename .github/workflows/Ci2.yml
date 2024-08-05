@@ -34,6 +34,7 @@ jobs:
     name: Build docker image and perform scan
     uses: ./.github/workflows/docker-image.yml
     secrets: inherit
+    
 
 
   
