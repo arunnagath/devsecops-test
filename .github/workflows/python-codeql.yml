@@ -1,0 +1,99 @@
+# For most projects, this workflow file will not need changing; you simply need
+# to commit it to your repository.
+#
+# You may wish to alter this file to override the set of languages analyzed,
+# or to provide custom queries or build logic.
+#
+# ******** NOTE ********
+# We have attempted to detect the languages in your repository. Please check
+# the `language` matrix defined below to confirm you have the correct set of
+# supported CodeQL languages.
+#
+name: "Build and SAST with CodeQL for Python"
+on:
+  workflow_call:
+       
+env: 
+  first_build_passed: 'true'
+  workflow_name: 'gcp-invalid'
+  
+permissions:
+    # required for all workflows
+    security-events: write
+    # only required for workflows in private repositories
+    actions: read
+    contents: read
+
+    
+jobs:
+  validate_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Branch
+        run: |
+          echo "You are using a ${{ github.ref_name }} ${{ github.head_ref }} branch with ${{ github.event_name }} as action"
+          if [[ "${{ github.ref_name }}" != hotfix* || "${{ github.base_ref }}" != hotfix* ]]; then
+            echo "The branch follows gcp standardization workflows."
+            echo "Starting the Codeql scanning."
+            echo "workflow_name=regular" >> $GITHUB_ENV
+          elif [[ "${{ github.ref_name }}" == hotfix* || "${{ github.base_ref }}" == hotfix* ]]; then
+            echo "The branch follows emergency hotfixes."
+            echo "Skipping the Codeql scanning."
+            echo "workflow_name=hotfix" >> $GITHUB_ENV
+          fi
+
+    outputs:
+      op_workflow_name: ${{ env.workflow_name }}
+                      
+      
+
+  analyze:
+    name: code-scan(Autobuild) for Python
+    needs: validate_branch
+    if: needs.validate_branch.outputs.op_workflow_name == 'regular'
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ] # java, javascript , or python
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'swift' 
+        # Use only 'java' to analyze code written in Java, Kotlin or both
+        # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
+        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
+        # java: [ '8', '11', '17' ]
+        
+    steps: 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    # Initializes the CodeQL tools for scanning.
+        
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        # If you wish to specify custom queries, you can do so here or in a config file.
+        # By default, queries listed here will override any specified in a config file.
+        # Prefix the list here with "+" to use these queries and those in the config file.
+
+        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+        queries: security-extended,security-and-quality
+        
+    - name: Python Autobuild
+      uses: github/codeql-action/autobuild@v3
+        
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
+      
+    outputs: 
+        autobuild_job_passed: ${{ env.first_build_passed }}
+    
+          
+          
