@@ -21,7 +21,7 @@ jobs:
     uses: ./.github/workflows/codeql_new.yml
     secrets: inherit 
 
-  sca:
+  sast:
     name: Software Composition Analysis (SCA) via Dependabot
     needs: build
     runs-on: ubuntu-latest
