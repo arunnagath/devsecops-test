@@ -1,6 +1,7 @@
-name: "CodeQL"
+name: "Devsecops Pipe Line"
 
 on:
+  workflow_call:
   push:
     branches: [ "main", "master" ]
   pull_request:
