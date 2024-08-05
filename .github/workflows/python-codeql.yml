@@ -25,25 +25,25 @@ permissions:
     contents: read
 
     
-jobs:
-  validate_branch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Branch
-        run: |
-          echo "You are using a ${{ github.ref_name }} ${{ github.head_ref }} branch with ${{ github.event_name }} as action"
-          if [[ "${{ github.ref_name }}" != hotfix* || "${{ github.base_ref }}" != hotfix* ]]; then
-            echo "The branch follows gcp standardization workflows."
-            echo "Starting the Codeql scanning."
-            echo "workflow_name=regular" >> $GITHUB_ENV
-          elif [[ "${{ github.ref_name }}" == hotfix* || "${{ github.base_ref }}" == hotfix* ]]; then
-            echo "The branch follows emergency hotfixes."
-            echo "Skipping the Codeql scanning."
-            echo "workflow_name=hotfix" >> $GITHUB_ENV
-          fi
+# jobs:
+#   validate_branch:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check Branch
+#         run: |
+#           echo "You are using a ${{ github.ref_name }} ${{ github.head_ref }} branch with ${{ github.event_name }} as action"
+#           if [[ "${{ github.ref_name }}" != hotfix* || "${{ github.base_ref }}" != hotfix* ]]; then
+#             echo "The branch follows gcp standardization workflows."
+#             echo "Starting the Codeql scanning."
+#             echo "workflow_name=regular" >> $GITHUB_ENV
+#           elif [[ "${{ github.ref_name }}" == hotfix* || "${{ github.base_ref }}" == hotfix* ]]; then
+#             echo "The branch follows emergency hotfixes."
+#             echo "Skipping the Codeql scanning."
+#             echo "workflow_name=hotfix" >> $GITHUB_ENV
+#           fi
 
-    outputs:
-      op_workflow_name: ${{ env.workflow_name }}
+#     outputs:
+#       op_workflow_name: ${{ env.workflow_name }}
                       
       
 
