@@ -18,7 +18,7 @@ jobs:
   CodeQL:
     needs: build
     name: Build Codeql Scan 
-    uses: ./.github/workflows/codeql_new.yml
+    uses: ./.github/workflows/python-codeql.yml
     secrets: inherit 
 
   sast:
