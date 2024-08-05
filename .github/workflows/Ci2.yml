@@ -1,4 +1,4 @@
-name: Devsecops Pipeline
+name: Devsecops Pipeline main test
 
 on:
   push:
