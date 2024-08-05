@@ -50,19 +50,19 @@ jobs:
         with:
             languages: python
         
-#   dast:
-#     name: Dynamic Application Static Testing
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out code
-#         uses: actions/checkout@v3
+  dast:
+    name: Dynamic Application Static Testing
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
         
-#       - name: Install OWASP ZAP
-#         run: sudo apt install owasp-zap
+      - name: Install OWASP ZAP
+        run: sudo apt install owasp-zap
 
-#       - name: Run OWASP ZAP scan
-#         run: zap-cli -g -u http://localhost:8080 -w report.xml
+      - name: Run OWASP ZAP scan
+        run: zap-cli -g -u http://localhost:8080 -w report.xml
 
 on:
   push:
@@ -84,15 +84,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # - name: Install Python dependencies
-      #   run: |
-      #     python3 -m venv venv
-      #     source venv/bin/activate
-      #     # pip install -r requirements.txt
+      - name: Install Python dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          # pip install -r requirements.txt
 
-      # - name: Write Python Hello World program
-      #   run: |
-      #     echo "print('Hello, World!')" > hello_world.py
+      - name: Write Python Hello World program
+        run: |
+          echo "print('Hello, World!')" > hello_world.py
 
       - name: Log into docker registry 
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1         
